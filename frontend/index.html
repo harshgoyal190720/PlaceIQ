@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlaceIQ | Login</title>
+  <link rel="stylesheet" href="css/style.css?v=2" />
+</head>
+<body class="login-body">
+  <div class="dot-grid"></div>
+  <div class="login-card">
+    <div class="logo">Place <span>IQ</span></div>
+    <p class="subtitle">AI-Powered Placement Intelligence</p>
+
+    <div class="toggle">
+      <button class="toggle-btn active" data-role="student">Student Login</button>
+      <button class="toggle-btn" data-role="admin">Admin Login</button>
+    </div>
+
+    <form id="loginForm">
+      <label>Email</label>
+      <input id="email" type="email" placeholder="student@placeiq.edu" required />
+      <label>Password</label>
+      <input id="password" type="password" placeholder="••••••••" required />
+      <button type="submit" id="signinBtn">
+        <span class="btn-text">Sign In</span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+
+    <div class="demo-creds">
+      <p>Student: student1@placeiq.edu / student123</p>
+      <p>Admin: admin@placeiq.edu / admin123</p>
+    </div>
+  </div>
+  <div id="toast-container"></div>
+  <script src="js/auth.js?v=5?v=2"></script>
+  <script>
+    const roleButtons = document.querySelectorAll('.toggle-btn');
+    const emailInput = document.getElementById('email');
+    roleButtons.forEach(btn => btn.addEventListener('click', () => {
+      roleButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const role = btn.dataset.role;
+      emailInput.placeholder = role === 'admin' ? 'admin@placeiq.edu' : 'student@placeiq.edu';
+    }));
+
+    const form = document.getElementById('loginForm');
+    const spinner = document.querySelector('.spinner');
+    const btnText = document.querySelector('.btn-text');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      spinner.classList.add('show');
+      btnText.textContent = 'Signing in...';
+      const email = emailInput.value.trim();
+      const password = document.getElementById('password').value.trim();
+      try {
+        await login(email, password);
+      } catch (err) {
+        showToast(err.message || 'Login failed', 'error');
+      } finally {
+        spinner.classList.remove('show');
+        btnText.textContent = 'Sign In';
+      }
+    });
+  </script>
+</body>
+</html>
+
+

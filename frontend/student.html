@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlaceIQ | Student Dashboard</title>
+  <link rel="stylesheet" href="css/style.css?v=2" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="app-body">
+  <div class="sidebar" id="sidebar">
+    <div class="avatar" id="avatar">PIQ</div>
+    <div class="user-meta">
+      <h3 id="studentName">Loading...</h3>
+      <p id="studentBranch" class="muted"></p>
+    </div>
+    <nav>
+      <a class="nav-item active" data-target="dashboard">&#127968; Dashboard</a>
+      <a class="nav-item" data-target="recommendations">&#10024; Recommendations</a>
+      <a class="nav-item" data-target="applications">&#128221; My Applications</a>
+      <a class="nav-item" data-target="advisor">&#129302; AI Advisor</a>
+      <a class="nav-item" data-target="profile">&#128100; Profile</a>
+      <a class="nav-item" data-target="resume">&#128194; Resume Predictor</a>
+    </nav>
+    <button class="logout" onclick="logout()">Logout</button>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+  </div>
+
+  <main id="main">
+    <section id="dashboard" class="section active">
+      <div class="stats-grid">
+        <div class="card stat-card">
+          <div class="stat-label">Readiness Score</div>
+          <div class="ring">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" class="ring-bg"></circle>
+              <circle cx="60" cy="60" r="52" class="ring-progress" id="readinessRing"></circle>
+            </svg>
+            <div class="ring-value" id="readinessValue">0</div>
+          </div>
+        </div>
+        <div class="card stat-card"><div class="stat-label">Applications Sent</div><div class="stat-value" id="statApplications">0</div></div>
+        <div class="card stat-card warning"><div class="stat-label">Shortlisted</div><div class="stat-value" id="statShortlisted">0</div></div>
+        <div class="card stat-card success"><div class="stat-label">Offers</div><div class="stat-value" id="statOffers">0</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card" id="deadlinesCard">
+          <div class="card-title">Upcoming Deadlines</div>
+          <div id="deadlinesList" class="list"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Skill Match Radar</div>
+          <canvas id="radarChart" height="260"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="recommendations" class="section">
+      <div class="section-header">
+        <h2>Recommendations</h2>
+        <p class="muted">Top matches curated by PlaceIQ ML</p>
+      </div>
+      <div id="recsSkeleton" class="skeleton-grid"></div>
+      <div id="recsGrid" class="card-grid"></div>
+    </section>
+
+    <section id="applications" class="section">
+      <h2>My Applications</h2>
+      <div id="appsSkeleton" class="skeleton-list"></div>
+      <div id="appsTimeline" class="timeline"></div>
+    </section>
+
+    <section id="advisor" class="section">
+      <div class="section-header">
+        <h2>AI Advisor</h2>
+        <button class="primary" id="adviceBtn">Get AI Analysis</button>
+      </div>
+      <div id="adviceLoader" class="typing-loader hidden"></div>
+      <div class="advisor-grid">
+        <div id="adviceCards" class="card-grid"></div>
+        <div class="card gauge-card">
+          <div class="gauge">
+            <svg viewBox="0 0 200 100">
+              <path d="M10 90 Q100 10 190 90" class="gauge-arc" />
+              <line id="gaugeNeedle" x1="100" y1="90" x2="100" y2="25" class="gauge-needle" />
+            </svg>
+            <div class="gauge-value" id="adviceScore">--</div>
+          </div>
+          <blockquote id="adviceSummary" class="summary"></blockquote>
+          <button class="ghost" id="refreshAdvice">Refresh Advice</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="profile" class="section">
+      <h2>Profile</h2>
+      <div class="card profile-card">
+        <div class="profile-row"><span>Name</span><strong id="profileName"></strong></div>
+        <div class="profile-row"><span>Email</span><strong id="profileEmail"></strong></div>
+        <div class="profile-row"><span>Branch</span><strong id="profileBranch"></strong></div>
+        <div class="profile-row"><span>CGPA</span><strong id="profileCgpa"></strong></div>
+        <div class="profile-row"><span>Year</span><strong id="profileYear"></strong></div>
+        <div class="profile-row"><span>Projects</span><strong id="profileProjects"></strong></div>
+        <div class="profile-row"><span>Internships</span><strong id="profileInternships"></strong></div>
+        <div class="profile-row"><span>Backlogs</span><strong id="profileBacklogs"></strong></div>
+        <div class="profile-row"><span>Skills</span><div id="profileSkills" class="pill-row"></div></div>
+      </div>
+    </section>    <section id="resume" class="section">      <h2>Resume Upload & Predictions</h2>      <div class="card">        <input type="file" id="resumeFile" accept="application/pdf,text/plain" />        <button class="primary" id="uploadResume">Upload & Extract</button>        <div id="resumeStatus" class="muted" style="margin-top:8px"></div>      </div>      <div class="card" style="margin-top:12px">        <div class="card-title">Predicted Selection (from resume)</div>        <div id="resumePredictions" class="list"></div>      </div>    </section>  </main>
+
+  <div id="toast-container"></div>
+  <script src="js/auth.js?v=8"></script>
+  <script src="js/student.js?v=10"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

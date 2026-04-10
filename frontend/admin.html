@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlaceIQ | Admin</title>
+  <link rel="stylesheet" href="css/style.css?v=2" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="app-body">
+  <div class="sidebar" id="sidebar">
+    <div class="logo-mini">TPC Admin</div>
+    <nav>
+      <a class="nav-item active" data-target="overview">📊 Overview</a>
+      <a class="nav-item" data-target="students">🎓 Students</a>
+      <a class="nav-item" data-target="companies">🏢 Companies</a>
+      <a class="nav-item" data-target="analytics">📈 Analytics</a>
+      <a class="nav-item" data-target="alerts">🚨 Alerts</a>
+    </nav>
+    <button class="logout" onclick="logout()">Logout</button>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+  </div>
+
+  <main id="main">
+    <section id="overview" class="section active">
+      <div class="stats-grid six">
+        <div class="card stat-card" id="statTotalStudents"></div>
+        <div class="card stat-card" id="statPlaced"></div>
+        <div class="card stat-card" id="statRate"></div>
+        <div class="card stat-card" id="statCompanies"></div>
+        <div class="card stat-card" id="statApplications"></div>
+        <div class="card stat-card" id="statAvgPackage"></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Recent Activity</div>
+          <div id="activityFeed" class="list"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Top Performing Students</div>
+          <table class="table" id="topStudents"></table>
+        </div>
+      </div>
+    </section>
+
+    <section id="students" class="section">
+      <div class="section-header">
+        <h2>Students</h2>
+        <div class="filters">
+          <input type="text" id="search" placeholder="Search by name, branch, skill" />
+          <select id="branchFilter"><option value="">Branch</option><option>CSE</option><option>ECE</option><option>ME</option><option>Civil</option></select>
+          <select id="cgpaFilter"><option value="">CGPA</option><option value="7">=7</option><option value="8">=8</option><option value="9">=9</option></select>
+          <select id="placedFilter"><option value="">Status</option><option value="placed">Placed</option><option value="unplaced">Unplaced</option></select>
+          <button class="ghost" id="exportCsv">Export CSV</button>
+        </div>
+      </div>
+      <div id="studentsSkeleton" class="skeleton-list"></div>
+      <table class="table" id="studentsTable"></table>
+    </section>
+
+    <section id="companies" class="section">
+      <div class="section-header">
+        <h2>Companies</h2>
+        <button class="primary" id="addCompanyBtn">Add Company</button>
+      </div>
+      <div id="companiesGrid" class="card-grid"></div>
+      <div class="slidein" id="companyFormPanel">
+        <h3>Add Company</h3>
+        <form id="companyForm">
+          <input name="name" placeholder="Name" required />
+          <input name="package" placeholder="Package (LPA)" type="number" step="0.1" required />
+          <input name="required_cgpa" placeholder="Required CGPA" type="number" step="0.1" required />
+          <input name="required_skills" placeholder="Skills (comma separated)" required />
+          <input name="sector" placeholder="Sector" required />
+          <input name="rounds" placeholder="Rounds" type="number" required />
+          <div class="form-actions">
+            <button type="submit" class="primary">Save</button>
+            <button type="button" class="ghost" id="closeForm">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="analytics" class="section">
+      <h2>Analytics</h2>
+      <div class="grid-2">
+        <div class="card"><canvas id="branchChart"></canvas></div>
+        <div class="card"><canvas id="sectorChart"></canvas></div>
+        <div class="card"><canvas id="applicationsChart"></canvas></div>
+        <div class="card"><canvas id="skillsChart"></canvas></div>
+      </div>
+    </section>
+
+    <section id="alerts" class="section">
+      <h2>Alerts</h2>
+      <div class="grid-3">
+        <div class="card alert-card danger"><div class="card-title">0 applications &lt; 30 days</div><div id="alertZeroApps" class="list"></div></div>
+        <div class="card alert-card warning"><div class="card-title">High CGPA not applied</div><div id="alertHighCgpa" class="list"></div></div>
+        <div class="card alert-card success"><div class="card-title">Upcoming drives</div><div id="alertDeadlines" class="list"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast-container"></div>
+  <script src="js/auth.js?v=8"></script>
+  <script src="js/admin.js?v=3"></script>
+</body>
+</html>
+
+
+
+
+
+
