@@ -26,6 +26,7 @@ DB_NAME = os.environ.get("DB_NAME", "placeiq")
 load_dotenv()
 
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY")
+ALLOW_INSECURE_TLS = os.environ.get("ALLOW_INSECURE_TLS", "false").lower() == "true"
 
 app = FastAPI(title="PlaceIQ API")
 app.add_middleware(
@@ -40,7 +41,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
+client_kwargs = {}
+if ALLOW_INSECURE_TLS:
+    # Last-resort toggle for platforms where CA trust/egress causes TLS handshake issues
+    client_kwargs["tlsAllowInvalidCertificates"] = True
+
+client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI, **client_kwargs)
 db = client[DB_NAME]
 bearer_scheme = HTTPBearer()
 
