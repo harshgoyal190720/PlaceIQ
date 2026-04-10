@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: placeiq-backend
+    env: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install --upgrade pip setuptools wheel && pip install --no-cache-dir --prefer-binary -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 8000
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DB_NAME
+        value: placeiq
