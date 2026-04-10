@@ -1,0 +1,9 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "root": "backend",
+    "builder": "NIXPACKS",
+    "buildCommand": "pip install --upgrade pip setuptools wheel && pip install --no-cache-dir -r requirements.txt"
+  },
+  "start": "uvicorn main:app --host 0.0.0.0 --port 8000"
+}
