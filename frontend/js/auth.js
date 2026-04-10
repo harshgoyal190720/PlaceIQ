@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8600";
+const API_BASE = "https://placeiq-ylqx.onrender.com";
 
 function showToast(message, type = "info") {
   const container = document.getElementById("toast-container");
