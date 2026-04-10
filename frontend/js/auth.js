@@ -1,4 +1,12 @@
-const API_BASE = "https://placeiq-ylqx.onrender.com";
+// Auto-pick API base: local backend when running on LAN/localhost, otherwise Render URL
+const API_BASE = (()=>{
+  const host = window.location.hostname;
+  const isLocal = host === "localhost" || host === "127.0.0.1" || /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/.test(host);
+  if(isLocal){
+    return `http://${host}:8600`;
+  }
+  return "https://placeiq-ylqx.onrender.com";
+})();
 
 function showToast(message, type = "info") {
   const container = document.getElementById("toast-container");
