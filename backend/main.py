@@ -30,7 +30,11 @@ GEMINI_KEY = os.environ.get("GEMINI_API_KEY")
 app = FastAPI(title="PlaceIQ API")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    # Restrict origins to deployed frontend + keep localhost for local development
+    allow_origins=[
+        "https://placeiq.vercel.app",
+        "http://localhost:3000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
